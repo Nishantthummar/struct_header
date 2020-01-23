@@ -14,7 +14,8 @@ struct student *start=NULL;
 **********************************************************************/
 struct student	*create_node(int r) {
 	struct student *pointer;
-	pointer = (struct student*)malloc(sizeof(struct student));
+	// allocate memory for first node
+	pointer = (struct student*)malloc(sizeof(struct student)); 
 	if( NULL == pointer )
 	{
 		printf("Error! Unable to allocate memory\n");
@@ -31,7 +32,7 @@ struct student	*create_node(int r) {
 void addNodeAtLast( int r ) {
 	struct student *temp=NULL;
 
-	if( NULL == start )
+	if( NULL == start ) 
 	{
 		printf("The list is empty\n");
 		return;
@@ -39,14 +40,13 @@ void addNodeAtLast( int r ) {
 
 	temp = start;
 
-	while( temp->next != NULL )
+	while( temp->next != NULL )  //!< go to end of list where NULL is pointed
 	{
 		temp = temp->next;
 	}
 	
-	temp->next = create_node(r);
-	 temp->next->next = NULL; //remove if not work me change on 22/01/20
-	 
+	temp->next = create_node(r); //!< add node at last
+	 temp->next->next = NULL; //!< give the NULL to next pointer 
 }
 
 /******************************************************************//**
@@ -65,7 +65,7 @@ void addNodeAtFirst( int r ) {
 	
 	temp = start;
 	start = create_node(r);
-	start->next = temp; //may be temp->next
+	start->next = temp; 
 	
 }
 
@@ -78,8 +78,7 @@ void addNodeBetween( int r, int r_add ) {
 	struct student *temp1 = NULL;
 	temp = start;
 	while ( temp != NULL ) {
-		if (temp->roll == r) {
-			
+		if (temp->roll == r) {  //!< check given number in all node			
 			temp1 = temp->next;
 			temp->next = create_node(r_add);
 			temp = temp->next;
@@ -127,15 +126,14 @@ void delNodeAtFirst() {
 void delNodeAtLast() {
 	 struct student *temp=NULL, *temp1=NULL;
 
-	// This condition occurs when you do not have any node in the list
         if( start == NULL )
         {
                 printf("The list is empty @delNodeAtLast\n");
                 return;
         }
 
-	// This condition occurs when you have only single node in the list
-        if( start->next == NULL)
+	
+        if( start->next == NULL) //!< when list have only one node
         {
                 free(start);
                 start = NULL;
@@ -146,16 +144,12 @@ void delNodeAtLast() {
 	temp = start;
         temp1 = start;
 
-        // Traverse to the last node of the list
         while(temp->next != NULL) {
             temp1 = temp;
             temp = temp->next;
         }
-
-        // Disconnects the link of second last node with last node 
+ 
         temp1->next = NULL;
-
-        // Delete the last node
         free(temp);
 	printf("The last node is deleted\n");
 }
@@ -175,18 +169,20 @@ void delNodeBetween( int r ) {
 	temp = start;
 
 	while ( temp != NULL ) {
+	//check if fist node have require roll no
 		if (temp->roll == r ) {
 			temp1 = temp->next;
 			free(temp);
 			start = temp1;
 			return;
+	//this condition accurs when first node not have required roll no.
 		}else if (temp->next->roll == r) {
 			temp2 = temp;
 			temp = temp->next;
 			temp1 = temp->next;
-			//temp1 = temp1->next;
 			free(temp);
 			temp2->next = temp1;
+		//this condition accurs when delete node is last
 			if (temp1 == NULL ) {
 				temp = NULL;
 				return;
@@ -196,7 +192,6 @@ void delNodeBetween( int r ) {
 		}
 
 		temp = temp->next;
-		//printf("\nnot return");
 	}
 	printf("\nNo value found");
 

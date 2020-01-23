@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "struheader.h"
 
-int main () {
+int main (int argc, char *argv[]) {
 	int add = 0; //!< strore addition of roll number
 
 	addNodeAtFirst(10);
